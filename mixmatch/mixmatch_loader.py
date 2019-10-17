@@ -3,7 +3,7 @@ from .mixmatch_batch import mixmatch_batch
 from .get_unlabeled_loader import get_unlabeled_loader
 
 
-class MixmatchLoader:
+class MixMatchLoader:
 
     def __init__(
             self, loader_labeled, dataset_unlabeled, model, output_transform,
@@ -32,5 +32,5 @@ class MixmatchLoader:
             )
 
     def __len__(self):
-        
+
         return len(self.loader_labeled)

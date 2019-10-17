@@ -10,7 +10,7 @@ or clone the repository and run
 `pip install .`
 
 ## Instructions
-The package provides a class `mixmatch.MixmatchLoader` that functions as a normal PyTorch DataLoader, as well as a loss function that is constructed from `mixmatch.get_mixmatch_loss`. For example uses, see below.
+The package provides a class `mixmatch.MixMatchLoader` that functions as a normal PyTorch DataLoader, as well as a loss function that is constructed from `mixmatch.get_mixmatch_loss`. For example uses, see below.
 
 You must provide a data loader that functions as an iterable yielding dictionaries with keys `'features'` and `'targets'` that hold augmented (!) features and targets for the labeled dataset. A dataset must also be provided for the unlabeled data, that can be wrapped in a PyTorch DataLoader. The dataset must return dictionaries with key `'features'` that hold augmented features.
 
@@ -22,7 +22,7 @@ For a description of the hyperparameters, please refer to the author's article.
 
 ## Example use
 ```python
-loader_mixmatch = mixmatch.MixmatchLoader(
+loader_mixmatch = mixmatch.MixMatchLoader(
     loader_labeled,
     dataset_unlabeled,
     model,
