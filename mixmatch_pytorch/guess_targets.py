@@ -5,7 +5,7 @@ from .tile_adjacent import tile_adjacent
 
 def guess_targets(features, model, output_transform, K, T):
 
-    features_device = features.device
+    original_device = features.device
     with torch.no_grad():
         features = features.to(next(model.parameters()).device)
         probabilities = output_transform(model(features))
@@ -14,6 +14,6 @@ def guess_targets(features, model, output_transform, K, T):
             .view(-1, K, *probabilities.shape[1:])
             .mean(dim=1)
         )
-        probabilities = sharpen(probabilities, T).to(features_device)
+        probabilities = sharpen(probabilities, T).to(original_device)
 
     return tile_adjacent(probabilities, K)

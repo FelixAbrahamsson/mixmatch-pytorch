@@ -9,7 +9,6 @@ def get_mixmatch_loss(
         def loss_function(logits, targets):
 
             batch_size = len(logits) // (K + 1)
-            logits_unlabeled = logits[:batch_size]
             loss_labeled = criterion_labeled(
                 logits[:batch_size], targets[:batch_size]
             )
