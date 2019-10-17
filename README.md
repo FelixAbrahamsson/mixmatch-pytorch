@@ -1,16 +1,12 @@
 # mixmatch-pytorch
-An implementation of Mixmatch (https://arxiv.org/pdf/1905.02249.pdf) with PyTorch
+An implementation of MixMatch (https://arxiv.org/pdf/1905.02249.pdf) with PyTorch
 
 
 ## Installation
-`pip install https://github.com/FelixAbrahamsson/mixmatch-pytorch`
-
-or clone the repository and run
-
-`pip install .`
+`pip install git+https://github.com/FelixAbrahamsson/mixmatch-pytorch`
 
 ## Instructions
-The package provides a class `mixmatch.MixMatchLoader` that functions as a normal PyTorch DataLoader, as well as a loss function that is constructed from `mixmatch.get_mixmatch_loss`. For example uses, see below.
+The package provides a class `mixmatch_pytorch.MixMatchLoader` that works like a normal PyTorch DataLoader, as well as a loss function that is constructed from `mixmatch_pytorch.get_mixmatch_loss`. For example uses, see below.
 
 You must provide a data loader that functions as an iterable yielding dictionaries with keys `'features'` and `'targets'` that hold augmented (!) features and targets for the labeled dataset. A dataset must also be provided for the unlabeled data, that can be wrapped in a PyTorch DataLoader. The dataset must return dictionaries with key `'features'` that hold augmented features.
 
@@ -22,7 +18,10 @@ For a description of the hyperparameters, please refer to the author's article.
 
 ## Example use
 ```python
-loader_mixmatch = mixmatch.MixMatchLoader(
+from mixmatch_pytorch import MixMatchLoader, get_mixmatch_loss
+
+
+loader_mixmatch = MixMatchLoader(
     loader_labeled,
     dataset_unlabeled,
     model,
@@ -32,7 +31,7 @@ loader_mixmatch = mixmatch.MixMatchLoader(
     alpha=0.75
 )
 
-criterion = mixmatch.get_mixmatch_loss(
+criterion = get_mixmatch_loss(
     criterion_labeled=nn.BCEWithLogitsLoss(),
     output_transform=torch.sigmoid,
     K=2,

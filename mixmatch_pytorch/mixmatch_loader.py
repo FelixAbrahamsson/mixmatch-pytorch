@@ -20,6 +20,7 @@ class MixMatchLoader:
         self.output_transform = output_transform
         self.K = K
         self.T = T
+        alpha = torch.tensor(alpha, dtype=torch.float64)
         self.beta = torch.distributions.beta.Beta(alpha, alpha)
 
     def __iter__(self):
