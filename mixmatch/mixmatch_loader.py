@@ -1,3 +1,4 @@
+import torch
 from .mixmatch_batch import mixmatch_batch
 from .get_unlabeled_loader import get_unlabeled_loader
 
@@ -19,7 +20,7 @@ class MixmatchLoader:
         self.output_transform = output_transform
         self.K = K
         self.T = T
-        self.alpha = alpha
+        self.beta = torch.distributions.beta.Beta(alpha, alpha)
 
     def __iter__(self):
 
@@ -27,8 +28,9 @@ class MixmatchLoader:
             batch_unlabeled = next(self.loader_unlabeled)
             yield mixmatch_batch(
                 batch, batch_unlabeled, self.model, self.output_transform,
-                self.K, self.T, self.alpha
+                self.K, self.T, self.beta
             )
 
     def __len__(self):
+        
         return len(self.loader_labeled)

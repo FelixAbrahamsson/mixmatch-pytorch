@@ -4,7 +4,7 @@ from .mixup_samples import mixup_samples
 
 
 def mixmatch_batch(
-        batch, batch_unlabeled, model, output_transform, K, T, alpha
+        batch, batch_unlabeled, model, output_transform, K, T, beta
     ):
 
     features_labeled = batch['features']
@@ -23,14 +23,14 @@ def mixmatch_batch(
         targets_labeled,
         features_W[:len(features_labeled)],
         targets_W[:len(features_labeled)],
-        alpha
+        beta
     )
     features_U, targets_U = mixup_samples(
         features_unlabeled,
         targets_unlabeled,
         features_W[len(features_labeled):],
         targets_W[len(features_labeled):],
-        alpha
+        beta
     )
 
     return dict(

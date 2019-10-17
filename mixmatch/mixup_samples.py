@@ -1,9 +1,6 @@
-import numpy as np
+def mixup_samples(x1, y1, x2, y2, beta):
 
-
-def mixup_samples(x1, y1, x2, y2, alpha):
-
-    weight = np.random.beta(alpha, alpha)
+    weight = beta.sample()
     weight = max(weight, 1 - weight)
 
     x = x1 * weight + (1 - weight) * x2
