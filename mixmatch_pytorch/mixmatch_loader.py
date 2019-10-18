@@ -14,7 +14,8 @@ class MixMatchLoader:
         self.loader_unlabeled = get_unlabeled_loader(
             dataset_unlabeled,
             loader_labeled.batch_size,
-            K
+            K,
+            loader_labeled.num_workers,
         )
         self.model = model
         self.output_transform = output_transform
@@ -25,11 +26,11 @@ class MixMatchLoader:
 
     def __iter__(self):
 
-        for batch in self.loader_labeled:
-            batch_unlabeled = next(self.loader_unlabeled)
+        zipped_loaders = zip(self.loader_labeled, self.loader_unlabeled)
+        for batch_labeled, batch_unlabeled in zipped_loaders:
             yield mixmatch_batch(
-                batch, batch_unlabeled, self.model, self.output_transform,
-                self.K, self.T, self.beta
+                batch_labeled, batch_unlabeled, self.model,
+                self.output_transform, self.K, self.T, self.beta
             )
 
     def __len__(self):
